@@ -270,6 +270,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **27.11.21:** - Rebasing to alpine 3.15 with php8. Restructure nginx configs ([see changes in base](https://github.com/linuxserver/docker-baseimage-alpine-nginx/pull/84)).
 * **11.07.21:** - Rebase to Alpine 3.14.
 * **12.01.21:** - Remove unused requirement, as of release 0.31.0.
 * **17.12.20:** - Make APP_URL var required (upstream changes).

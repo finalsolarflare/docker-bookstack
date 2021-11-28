@@ -11,9 +11,6 @@ LABEL maintainer="homerr"
 ARG BOOKSTACK_RELEASE
 
 RUN \
-  echo "**** install build packages ****" && \
-  apk add --no-cache --virtual=build-dependencies \
-    composer && \
   echo "**** install runtime packages ****" && \
   apk add --no-cache  \
     curl \
@@ -26,19 +23,25 @@ RUN \
     php8-gd \
     php8-ldap \
     php8-mbstring \
-    php8-memcached \
     php8-mysqlnd \
     php8-openssl \
     php8-pdo_mysql \
+    php8-pecl-memcached \
     php8-phar \
     php8-simplexml \
     php8-tokenizer \
     qt5-qtbase \
     tar \
-    ttf-freefont \
+    ttf-freefont && \
+  apk add --no-cache \
+    --repository=http://dl-cdn.alpinelinux.org/alpine/3.14/community \
     wkhtmltopdf && \
-  echo "**** configure php-fpm ****" && \
-  sed -i 's/;clear_env = no/clear_env = no/g' /etc/php8/php-fpm.d/www.conf && \
+  echo "**** install composer ****" && \
+  php8 -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
+  php8 composer-setup.php --install-dir=/usr/local/bin/composer --filename=composer && \
+  echo "**** configure php-fpm to pass env vars ****" && \
+  sed -E -i 's/^;?clear_env ?=.*$/clear_env = no/g' /etc/php8/php-fpm.d/www.conf && \
+  grep -qxF 'clear_env = no' /etc/php8/php-fpm.d/www.conf || echo 'clear_env = no' >> /etc/php8/php-fpm.d/www.conf && \
   echo "env[PATH] = /usr/local/bin:/usr/bin:/bin" >> /etc/php8/php-fpm.conf && \
   echo "**** fetch bookstack ****" && \
   mkdir -p\
@@ -58,8 +61,6 @@ RUN \
   echo "**** overlay-fs bug workaround ****" && \
   mv /var/www /var/www-tmp && \
   echo "**** cleanup ****" && \
-  apk del --purge \
-    build-dependencies && \
   rm -rf \
     /root/.composer \
     /tmp/*

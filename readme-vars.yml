@@ -101,7 +101,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
-  - { date: "27.11.21:", desc: "Rebasing to alpine 3.15 with php8. Restructure nginx configs ([see changes in base](https://github.com/linuxserver/docker-baseimage-alpine-nginx/pull/84))." }
+  - { date: "05.12.21:", desc: "Rebasing to alpine 3.15 with php8. Restructure nginx configs ([see changes in base](https://github.com/linuxserver/docker-baseimage-alpine-nginx/pull/84))." }
   - { date: "11.07.21:", desc: "Rebase to Alpine 3.14." }
   - { date: "12.01.21:", desc: "Remove unused requirement, as of release 0.31.0." }
   - { date: "17.12.20:", desc: "Make APP_URL var required (upstream changes)." }

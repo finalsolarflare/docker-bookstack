@@ -42,7 +42,7 @@ RUN \
   mkdir -p\
     /var/www/html && \
   if [ -z ${BOOKSTACK_RELEASE+x} ]; then \
-    BOOKSTACK_RELEASE=$(curl -sX GET "https://api.github.com/repos/bookstackapp/bookstack/releases/latest" \
+    BOOKSTACK_RELEASE=$(curl -sX GET "https://api.github.com/repos/finalsolarflare/bookstack/releases/latest" \
     | awk '/tag_name/{print $4;exit}' FS='[""]'); \
   fi && \
   curl -o \
